@@ -4,6 +4,8 @@
  * @brief Fichier source de l'application
  *********************************************************************/
 #include "Application.h"
+#include <Arduino.h>
+
 
 
 Application::Application()

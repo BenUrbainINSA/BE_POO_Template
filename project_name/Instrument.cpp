@@ -7,6 +7,7 @@ using namespace std;
 
 Instrument::Instrument(const int note, const int duree){
   this->note = note;
+  this->duree = duree;
 }
 
 int Instrument::getNote(){

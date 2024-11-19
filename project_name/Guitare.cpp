@@ -3,5 +3,5 @@
 Guitare::Guitare():Instrument(660,1000){}
 
 void Guitare::emettreSon() const{
-  tone(9,note,duree);
+  tone(14,note,duree);
 }

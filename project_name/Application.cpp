@@ -5,30 +5,30 @@
  *********************************************************************/
 #include "Application.h"
 #include <Arduino.h>
+#include "Menu.h"
 
-
-
+// Constructeur
 Application::Application()
+ : lcd(),                                   // Instancie l'écran LCD
+      potentiometerPin(A0),                    // Initialisation des broches
+      selectButtonPin(0),
+      menu(potentiometerPin, selectButtonPin, lcd) // Initialise le menu
 {
-  // Code
-  ; 
 }
-  
-Application::~Application()
-{
-  // Code
-  ;
-}  
 
+// Destructeur
+Application::~Application() {
+    // Rien à faire dans ce cas
+}
+
+// Initialisation de l'application
 void Application::init(void)
 {
-  // Code
-    ;
+  menu.init(); // Initialise le menu
 }
 
-
+// Exécution de l'application (mettre à jour l'affichage du menu)
 void Application::run(void)
 {
-  // Code
-    ;
+  menu.update(); // Afficher le menu
 }

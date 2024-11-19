@@ -6,12 +6,19 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#include "Menu.h"
 /**
   * @class Application
   * @brief Classe Application 
 */    
 class Application
 {
+  private : 
+    rgb_lcd lcd;            // Instance de l'écran LCD
+    int potentiometerPin;   // Broche du potentiomètre
+    int selectButtonPin;    // Broche du bouton de sélection
+    Menu menu;              // Menu gérant les interactions
+    
   public :
     /**
      * @fn Application();

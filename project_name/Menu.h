@@ -29,15 +29,16 @@ private:
   int lastPotValue;
 
   // methode utilisée en interne : 
-  void displayMenu();
+  
   void handleSelection();
 
 public:
-  Menu(int potPin, int button, rgb_lcd& lcd);
+  Menu(int potPin, int button, rgb_lcd lcd);
   void init();
   void update();
   const std::string& getInstrument();
   void addIntrument(const std::string& instrument);
+  void displayMenu();
 
 };
 

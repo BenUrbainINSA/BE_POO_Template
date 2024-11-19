@@ -6,18 +6,17 @@
 #include <string>
 using namespace std;
 
-int buzzerPin = 9;
+//extern const int buzzerPin = 9;
 
 class Instrument{
   protected :
     int note;
-    string nom;
     int duree;
   
   public :
-    Instrument(const int note, const string nom);
+    Instrument(const int note, const int duree);
 
-    void emettreSon(int note, int duree);
+    virtual void emettreSon() const = 0;
 
     int getNote();
 

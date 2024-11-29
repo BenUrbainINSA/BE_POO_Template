@@ -22,7 +22,7 @@ private:
   int buttonPin;
 
   //etat du menu 
-  int state = 0;
+  int state = -1;
   
   //LCD 
   rgb_lcd& lcd;
@@ -44,9 +44,11 @@ private:
   // methode utilisée en interne : 
   void handleSelection();
   void handlePlacement();
-  void displayMenu();
+  void displayMainMenu();
+  void displayMenuInstrument();
   void displayPlacementMenu(int position);
   void placeInstrument(int position);
+  void jouerMelodie(int tempo);
 
 public:
   Menu(int potPin, int button, rgb_lcd lcd);

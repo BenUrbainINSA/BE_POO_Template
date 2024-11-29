@@ -10,55 +10,53 @@
 #include "Instrument.h"
 #include "Guitare.h"
 #include "Triangle.h"
-#include <memory> // pour std::unique_ptr
+#include <memory> // Pour std::unique_ptr
 
-
-
-class Menu{
+class Menu {
 
 private:
-  //Pin 
-  int potentiometerPin;
-  int buttonPin;
+    // Pins
+    int potentiometerPin;
+    int buttonPin;
 
-  //etat du menu 
-  int state = -1;
-  
-  //LCD 
-  rgb_lcd& lcd;
-  const int colorR = 255;
-  const int colorG = 255;
-  const int colorB = 255;
+    // État du menu
+    int state; // État courant du menu
+    bool stateChanged; // Indique si l’état a changé pour rafraîchir l’affichage
 
-  //Instrument 
-  std::vector<Instrument*> instruments;
+    // LCD
+    rgb_lcd& lcd;
+    const int colorR = 255;
+    const int colorG = 255;
+    const int colorB = 255;
 
-  //file de lecture 
-  std::vector<Instrument*> Lecture;
+    // Instruments
+    std::vector<Instrument*> instruments;
 
+    // File de lecture
+    std::vector<Instrument*> Lecture;
 
-  // Etat menu
-  int currentSelection;
-  int lastPotValue;
+    // Gestion des interactions
+    int currentSelection; // Instrument actuellement sélectionné
+    int lastPotValue; // Dernière valeur du potentiomètre (sélection instrument)
+    int lastPotValue2; // Dernière valeur pour le placement
+    int lastPotValue3; // Dernière valeur pour le Main Menu
+    int lastButtonState; // Dernier état du bouton
 
-  // methode utilisée en interne : 
-  void handleSelection();
-  void handlePlacement();
-  void displayMainMenu();
-  void displayMenuInstrument();
-  void displayPlacementMenu(int position);
-  void placeInstrument(int position);
-  void jouerMelodie(int tempo);
+    // Méthodes utilisées en interne :
+    void handleSelection(); // Gérer la sélection d’un instrument
+    void handlePlacement(); // Gérer le placement de l’instrument
+    void displayMainMenu(); // Afficher le menu principal
+    void displayMenuInstrument(); // Afficher le menu de sélection d’instrument
+    void displayPlacementMenu(int position); // Afficher le menu de placement
+    void placeInstrument(int position); // Placer un instrument
+    void jouerMelodie(int tempo); // Jouer la mélodie avec le fichier Lecture
 
 public:
-  Menu(int potPin, int button, rgb_lcd lcd);
-  ~Menu();
-  void init();
-  void update();
-//  const Instrument getInstrument();
-//  void addIntrument(const Instrument instrument);
+    Menu(int potPin, int button, rgb_lcd lcd);
+    ~Menu();
 
+    void init(); // Initialiser le menu
+    void update(); // Mettre à jour l’état du menu en fonction des entrées utilisateur
 };
-
 
 #endif

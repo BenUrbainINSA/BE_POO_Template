@@ -89,7 +89,9 @@ void Menu::update() {
         case 2: // Placement d'instruments
             handlePlacement();
             break;
-
+        case 3:
+            jouerMelodie(100);
+            this->state = -1;
         default:
             break;
     }

@@ -7,12 +7,14 @@
 #include <Arduino.h>
 #include "Menu.h"
 
+
 // Constructeur
 Application::Application()
  : lcd(),                                   // Instancie l'écran LCD
       potentiometerPin(A0),                    // Initialisation des broches
-      selectButtonPin(0),
+      selectButtonPin(15), //pin D8
       menu(potentiometerPin, selectButtonPin, lcd) // Initialise le menu
+      
 {
 }
 

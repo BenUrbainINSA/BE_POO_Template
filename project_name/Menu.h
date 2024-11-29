@@ -7,6 +7,12 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "rgb_lcd.h"
+#include "Instrument.h"
+#include "Guitare.h"
+#include "Triangle.h"
+#include <memory> // pour std::unique_ptr
+
+
 
 class Menu{
 
@@ -14,6 +20,9 @@ private:
   //Pin 
   int potentiometerPin;
   int buttonPin;
+
+  //etat du menu 
+  int state = 0;
   
   //LCD 
   rgb_lcd& lcd;
@@ -22,23 +31,30 @@ private:
   const int colorB = 255;
 
   //Instrument 
-  std::vector<std::string> instruments;
+  std::vector<Instrument*> instruments;
+
+  //file de lecture 
+  std::vector<Instrument*> Lecture;
+
 
   // Etat menu
   int currentSelection;
   int lastPotValue;
 
   // methode utilisée en interne : 
-  
   void handleSelection();
+  void handlePlacement();
+  void displayMenu();
+  void displayPlacementMenu(int position);
+  void placeInstrument(int position);
 
 public:
   Menu(int potPin, int button, rgb_lcd lcd);
+  ~Menu();
   void init();
   void update();
-  const std::string& getInstrument();
-  void addIntrument(const std::string& instrument);
-  void displayMenu();
+//  const Instrument getInstrument();
+//  void addIntrument(const Instrument instrument);
 
 };
 

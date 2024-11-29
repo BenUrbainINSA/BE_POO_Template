@@ -8,6 +8,8 @@ Application myApplication;
 
 void setup() 
 {
+    Serial.begin(9600);
+
   // Initialiser l'application
   myApplication.init();
 }
@@ -16,5 +18,4 @@ void loop()
 {
   // Lancer l'application (mettre à jour le menu)
   myApplication.run();
-  delay(100);
 }

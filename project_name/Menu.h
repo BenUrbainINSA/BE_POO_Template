@@ -10,6 +10,8 @@
 #include "Instrument.h"
 #include "Guitare.h"
 #include "Triangle.h"
+#include "Trompette.h"
+#include "Piano.h"
 #include <memory> // Pour std::unique_ptr
 
 class Menu {
@@ -49,6 +51,7 @@ private:
     void displayMenuInstrument(); // Afficher le menu de sélection d’instrument
     void displayPlacementMenu(int position); // Afficher le menu de placement
     void placeInstrument(int position); // Placer un instrument
+    void handleMusique(int CursorX, int CursorY);
     void jouerMelodie(int tempo); // Jouer la mélodie avec le fichier Lecture
 
 public:

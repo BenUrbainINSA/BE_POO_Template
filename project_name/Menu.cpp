@@ -20,6 +20,8 @@ void Menu::init() {
     if (instruments.empty()) {
         instruments.push_back(new Guitare());
         instruments.push_back(new Triangle());
+        instruments.push_back(new Piano());
+        instruments.push_back(new Trompette());
     }
 
     // Affiche le Main Menu à l'initialisation
@@ -154,7 +156,7 @@ void Menu::handleSelection() {
 
 void Menu::handlePlacement() {
     int potValue = analogRead(potentiometerPin);
-    int position = map(potValue, 0, 1023, 1, 16); // Positions de 1 à 16
+    int position = map(potValue, 0, 1023, 1, 32); // Positions de 1 à 16
     int buttonValue = digitalRead(buttonPin);
 
     if (position != lastPotValue2) {
@@ -182,8 +184,8 @@ void Menu::displayPlacementMenu(int position) {
 
 void Menu::placeInstrument(int position) {
     // Assurez-vous que le vecteur de lecture est de la bonne taille
-    if (Lecture.size() < 16) {
-        Lecture.resize(16, nullptr); // Remplir avec des nullptr si nécessaire
+    if (Lecture.size() < 32) {
+        Lecture.resize(32, nullptr); // Remplir avec des nullptr si nécessaire
     }
 
     // Ajouter l'instrument sélectionné à la position donnée
@@ -196,14 +198,53 @@ void Menu::placeInstrument(int position) {
     lcd.print("Placed at Pos:");
     lcd.setCursor(0, 1);
     lcd.print(position + 1);
-    delay(1000);
+    delay(100);
 }
 
+
+
 void Menu::jouerMelodie(int tempo) {
-    for (int i = 0; i < 16; i++) {
-        if (Lecture[i] != nullptr) {
-            Lecture[i]->emettreSon();
-        }
-        delay(tempo);
+  for (int i = 0; i < 32; i++) {
+    if (Lecture[i] != nullptr) {
+      Lecture[i]->emettreSon();
+    } else {
+      delay(tempo);
     }
+    delay(tempo);
+  }
 }
+
+
+/*
+void Menu::handleMusique(int CursorX, int CursorY){
+   lcd.clear();
+   for (int i=0; i<2; i++){
+     for (int j=0; j<16; j++){
+       lcd.setCursor(j,i);
+
+       if (Lecture[i+j] != nullptr){
+         lcd.print("O");
+       }
+       else {
+         lcd.print("x");
+       }
+       if (CursorX==i && CursorY==j){
+         lcd.print(" ");
+       }
+     }
+   }
+ }
+
+ void Menu::jouerMelodie(int tempo){
+    for (int i=0; i<2;i++){
+      for (int j=0; j<16; j++){
+        Lecture[i+j]->emettreSon();
+        delay(tempo);
+        handleMusique(j,i);
+      }
+    }
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Dieudonné");
+ }
+*/

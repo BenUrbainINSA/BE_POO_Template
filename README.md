@@ -1,8 +1,5 @@
 # BE_POO_Template
 
-Voici un exemple de documentation pour le fichier **`Menu.cpp`** que tu peux ajouter dans ton fichier **`README.md`** sur GitHub. Ce document décrit le fonctionnement du menu, les fonctions, et les étapes principales du code.
-
----
 
 # Menu.cpp Documentation
 

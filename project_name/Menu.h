@@ -15,6 +15,15 @@
 #include <memory> // Pour std::unique_ptr
 #include "Menuexception.h"
 
+/**
+ * @class Menu
+ * @brief Classe Menu.
+ * 
+ * La classe Menu gère les interactions utilisateur à travers un écran LCD et un potentiomètre (pour la navigation) ainsi qu'un bouton (pour la sélection). 
+ * Elle permet de gérer l'affichage des menus, la sélection d'instruments et leur placement dans un tableau, ainsi que la lecture d'une mélodie en fonction des instruments sélectionnés.
+ */
+
+
 class Menu {
 
 private:

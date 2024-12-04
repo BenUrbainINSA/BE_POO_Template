@@ -214,6 +214,6 @@ void Menu::jouerMelodie(int tempo) {
         } else {
             delay(tempo);
         }
-        delay(tempo);
+        delay(1000+tempo);
     }
 }

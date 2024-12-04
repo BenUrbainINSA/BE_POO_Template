@@ -36,6 +36,7 @@ void Menu::init() {
 
 void Menu::update() {
     int potValue = analogRead(potentiometerPin);
+    delay(50); // update avant d'actualiser le bouton pour eviter l'aléa de selction multiple  
     int buttonValue = digitalRead(buttonPin);
 
     if (stateChanged) {

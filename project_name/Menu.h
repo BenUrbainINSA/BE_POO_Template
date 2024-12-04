@@ -47,20 +47,71 @@ private:
     int lastButtonState; // Dernier état du bouton
 
     // Méthodes utilisées en interne :
+
+  /**
+ * @fn void Menu::handleSelection()
+ * @brief Confirme la sélection de l'instrument actuel et affiche son nom.
+ * @Exemple menu.handleSelection();
+ */
     void handleSelection(); // Gérer la sélection d’un instrument
+  /**
+ * @fn void Menu::handlePlacement()
+ * @brief Permet de placer un instrument sélectionné à une position spécifique.
+ * @Exemple menu.handlePlacement();
+ */
     void handlePlacement(); // Gérer le placement de l’instrument
+  
+  /**
+ * @fn void Menu::displayMainMenu()
+ * @brief Affiche le menu principal permettant de jouer une mélodie ou d'ajouter un instrument.
+ * @Exemple menu.displayMainMenu();
+ */
     void displayMainMenu(); // Afficher le menu principal
+
+  /**
+ * @fn void Menu::displayMenuInstrument()
+ * @brief Affiche la liste des instruments disponibles pour sélection.
+ * @Exemple menu.displayMenuInstrument();
+ */
     void displayMenuInstrument(); // Afficher le menu de sélection d’instrument
+
+  /**
+ * @fn void Menu::displayPlacementMenu(int position)
+ * @brief Affiche les options de placement pour l'instrument à la position spécifiée.
+ * @Exemple menu.displayPlacementMenu(3);
+ */
     void displayPlacementMenu(int position); // Afficher le menu de placement
+  
+/**
+ * @fn void Menu::placeInstrument(int position)
+ * @brief Place l'instrument sélectionné à une position donnée dans le tableau Lecture.
+ * @Exemple menu.placeInstrument(5);
+ */
     void placeInstrument(int position); // Placer un instrument
-    void handleMusique(int CursorX, int CursorY);
+  /**
+ * @fn void Menu::jouerMelodie(int tempo)
+ * @brief Joue une mélodie en utilisant les instruments placés dans Lecture.
+ * @param tempo Vitesse à laquelle la mélodie est jouée.
+ * @Exemple menu.jouerMelodie(100);
+ */
     void jouerMelodie(int tempo); // Jouer la mélodie avec le fichier Lecture
 
 public:
     Menu(int potPin, int button, rgb_lcd lcd);
     ~Menu();
 
+/**
+ * @fn void Menu::init()
+ * @brief Initialise les composants matériels et affiche le menu principal.
+ * @Exemple Menu menu(pinPot, pinButton, lcd); menu.init();
+ */
     void init(); // Initialiser le menu
+
+/**
+ * @fn void Menu::update()
+ * @brief Met à jour l'état du menu en fonction des entrées utilisateur et gère les transitions d'état.
+ * @Exemple menu.update();
+ */
     void update(); // Mettre à jour l’état du menu en fonction des entrées utilisateur
 };
 

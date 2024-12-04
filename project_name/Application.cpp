@@ -26,6 +26,7 @@ Application::~Application() {
 // Initialisation de l'application
 void Application::init(void)
 {
+  Serial.begin(9600);
   menu.init(); // Initialise le menu
 }
 

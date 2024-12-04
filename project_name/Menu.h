@@ -97,7 +97,20 @@ private:
     void jouerMelodie(int tempo); // Jouer la mélodie avec le fichier Lecture
 
 public:
+/**
+ * @fn Menu::Menu(int potPin, int button, rgb_lcd lcd)
+ * @brief Constructeur de la classe Menu. Initialise les variables et configure les instruments de base.
+ * @param potPin Pin du potentiomètre.
+ * @param button Pin du bouton.
+ * @param lcd Référence vers l'écran LCD RGB.
+ * @Exemple Menu menu(A0, 2, lcd);
+ */
+
     Menu(int potPin, int button, rgb_lcd lcd);
+/**
+ * @fn Menu::~Menu()
+ * @brief Destructeur de la classe Menu. Libère les ressources des instruments.
+ */
     ~Menu();
 
 /**

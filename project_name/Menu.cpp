@@ -210,7 +210,7 @@ void Menu::jouerMelodie(int tempo) {
     for (int i = 0; i < 32; i++) {
         if (tempo < 0) { throw MenuException("Tempo négatif détecté !"); }
         if (Lecture[i] != nullptr) {
-            Lecture[i]->emettreSon();
+            *Lecture[i]+=1000;     //emet le son pendant 1000ms en utilisant notre operateur sruchargé, a la base on utilisait Lecture[i]->emmettreson(), mais bon il faut bien satisfaire le cahier des charges !
         } else {
             delay(tempo);
         }

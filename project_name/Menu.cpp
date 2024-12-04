@@ -3,7 +3,21 @@
 Menu::Menu(int potPin, int button, rgb_lcd lcd) 
     : potentiometerPin(potPin), buttonPin(button), lcd(lcd), 
       currentSelection(0), lastPotValue(-1), state(-1), stateChanged(true), 
-      lastButtonState(LOW), lastPotValue3(-1), lastPotValue2(-1) {}
+      lastButtonState(LOW), lastPotValue3(-1), lastPotValue2(-1) {
+
+    // Initialiser le tableau Lecture avec nullptr
+    for (int i = 0; i < 32; i++) {
+        Lecture[i] = nullptr; // Initialisation de toutes les positions avec nullptr
+    }
+
+    // Initialisation des premiers instruments dans le vecteur "instruments"
+    if (instruments.empty()) {
+        instruments.push_back(new Guitare());
+        instruments.push_back(new Triangle());
+        instruments.push_back(new Piano());
+        instruments.push_back(new Trompette());
+    }
+}
 
 Menu::~Menu() {}
 
@@ -16,14 +30,6 @@ void Menu::init() {
     lcd.begin(16, 2);
     lcd.setRGB(colorR, colorG, colorB);
 
-    // Création des instruments si la liste est vide
-    if (instruments.empty()) {
-        instruments.push_back(new Guitare());
-        instruments.push_back(new Triangle());
-        instruments.push_back(new Piano());
-        instruments.push_back(new Trompette());
-    }
-
     // Affiche le Main Menu à l'initialisation
     displayMainMenu();
 }
@@ -33,7 +39,6 @@ void Menu::update() {
     int buttonValue = digitalRead(buttonPin);
 
     if (stateChanged) {
-        // Reset des variables ou affichage lié au nouvel état
         switch (this->state) {
             case -1: // Main Menu
                 displayMainMenu();
@@ -45,12 +50,12 @@ void Menu::update() {
                 handleSelection();
                 break;
             case 2: // Placement d'instrument
-                displayPlacementMenu(1); // Position initiale à afficher
+                displayPlacementMenu(1);
                 break;
             default:
                 break;
         }
-        stateChanged = false; // Transition terminée
+        stateChanged = false;
     }
 
     // Gestion des états
@@ -58,24 +63,24 @@ void Menu::update() {
         case -1: // Main Menu
             potValue = map(potValue, 0, 1023, 0, 1); // Mappe sur les options du Main Menu
             if (potValue != lastPotValue) {
-                displayMainMenu(); // Rafraîchit l'affichage si changement
+                displayMainMenu();
                 lastPotValue = potValue;
             }
-            if (buttonValue == HIGH && lastButtonState == LOW) { // Transition Main Menu -> sélection
+            if (buttonValue == HIGH && lastButtonState == LOW) {
                 delay(50); // Anti-rebond
-                this->state = potValue == 0 ? 3 : 0; // 3 = Jouer musique, 0 = Sélection instrument
-                stateChanged = true; // Détecte le nouvel état
+                this->state = potValue == 0 ? 3 : 0;
+                stateChanged = true;
             }
             break;
 
         case 0: // Sélection d'instruments
-            potValue = map(potValue, 0, 1023, 0, instruments.size() - 1);
+            potValue = map(potValue, 0, 1023, 0, instruments.size() - 1); // Adapter pour la taille du vecteur instruments
             if (potValue != lastPotValue) {
                 currentSelection = potValue;
                 displayMenuInstrument();
                 lastPotValue = potValue;
             }
-            if (buttonValue == HIGH && lastButtonState == LOW) { // Transition sélection -> confirmation
+            if (buttonValue == HIGH && lastButtonState == LOW) {
                 delay(50); // Anti-rebond
                 this->state = 1; // Passe à handleSelection
                 stateChanged = true;
@@ -84,7 +89,7 @@ void Menu::update() {
 
         case 1: // Sélection confirmée
             handleSelection();
-            this->state = 2; // Passe à placement
+            this->state = 2;
             stateChanged = true;
             break;
 
@@ -98,7 +103,7 @@ void Menu::update() {
             break;
     }
 
-    lastButtonState = buttonValue; // Met à jour l’état précédent du bouton
+    lastButtonState = buttonValue;
 }
 
 void Menu::displayMainMenu() {
@@ -132,7 +137,7 @@ void Menu::displayMainMenu() {
         stateChanged = true;
     }
 
-    lastButtonState = buttonValue; // Met à jour l’état précédent
+    lastButtonState = buttonValue;
 }
 
 void Menu::displayMenuInstrument() {
@@ -151,12 +156,12 @@ void Menu::handleSelection() {
     lcd.print("Selected:");
     lcd.setCursor(0, 1);
     lcd.print(instruments[currentSelection]->getNom().c_str());
-    delay(1000); // Pause pour afficher la sélection
+    delay(1000);
 }
 
 void Menu::handlePlacement() {
     int potValue = analogRead(potentiometerPin);
-    int position = map(potValue, 0, 1023, 1, 32); // Positions de 1 à 16
+    int position = map(potValue, 0, 1023, 1, 32);
     int buttonValue = digitalRead(buttonPin);
 
     if (position != lastPotValue2) {
@@ -178,19 +183,18 @@ void Menu::displayPlacementMenu(int position) {
     lcd.print("Place at Pos:");
     lcd.setCursor(0, 1);
     lcd.print("> ");
-    lcd.print(position);
+    lcd.print(position); // Affiche position en base 1
+
+    if (Lecture[position-1] != nullptr) { // Vérifie si la position est occupée
+        lcd.print(" X "); // Ajoute 'X' pour indiquer qu'elle est occupée
+        lcd.print(Lecture[position-1]->getNom().c_str());
+    }
     delay(100);
 }
 
 void Menu::placeInstrument(int position) {
-    // Assurez-vous que le vecteur de lecture est de la bonne taille
-    if (Lecture.size() < 32) {
-        Lecture.resize(32, nullptr); // Remplir avec des nullptr si nécessaire
-    }
-
     // Ajouter l'instrument sélectionné à la position donnée
     Lecture[position] = instruments[currentSelection];
-    Lecture[position]->emettreSon();
 
     // Confirmation visuelle
     lcd.clear();
@@ -201,50 +205,14 @@ void Menu::placeInstrument(int position) {
     delay(100);
 }
 
-
-
 void Menu::jouerMelodie(int tempo) {
-  for (int i = 0; i < 32; i++) {
-    if (Lecture[i] != nullptr) {
-      Lecture[i]->emettreSon();
-    } else {
-      delay(tempo);
-    }
-    delay(tempo);
-  }
-}
-
-
-/*
-void Menu::handleMusique(int CursorX, int CursorY){
-   lcd.clear();
-   for (int i=0; i<2; i++){
-     for (int j=0; j<16; j++){
-       lcd.setCursor(j,i);
-
-       if (Lecture[i+j] != nullptr){
-         lcd.print("O");
-       }
-       else {
-         lcd.print("x");
-       }
-       if (CursorX==i && CursorY==j){
-         lcd.print(" ");
-       }
-     }
-   }
- }
-
- void Menu::jouerMelodie(int tempo){
-    for (int i=0; i<2;i++){
-      for (int j=0; j<16; j++){
-        Lecture[i+j]->emettreSon();
+    for (int i = 0; i < 32; i++) {
+        if (tempo < 0) { throw MenuException("Tempo négatif détecté !"); }
+        if (Lecture[i] != nullptr) {
+            Lecture[i]->emettreSon();
+        } else {
+            delay(tempo);
+        }
         delay(tempo);
-        handleMusique(j,i);
-      }
     }
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("Dieudonné");
- }
-*/
+}

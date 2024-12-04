@@ -13,6 +13,7 @@
 #include "Trompette.h"
 #include "Piano.h"
 #include <memory> // Pour std::unique_ptr
+#include "Menuexception.h"
 
 class Menu {
 
@@ -35,7 +36,8 @@ private:
     std::vector<Instrument*> instruments;
 
     // File de lecture
-    std::vector<Instrument*> Lecture;
+    std::array<Instrument*, 32> Lecture; // Tableau des instruments placés
+
 
     // Gestion des interactions
     int currentSelection; // Instrument actuellement sélectionné
@@ -61,5 +63,7 @@ public:
     void init(); // Initialiser le menu
     void update(); // Mettre à jour l’état du menu en fonction des entrées utilisateur
 };
+
+
 
 #endif

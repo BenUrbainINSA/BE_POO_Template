@@ -32,5 +32,11 @@ void Application::init(void)
 // Exécution de l'application (mettre à jour l'affichage du menu)
 void Application::run(void)
 {
-  menu.update(); // Afficher le menu
+  try {
+    menu.update();
+  } catch (const MenuException& e) {
+    Serial.println("Exception capturée depuis Menu :");
+    Serial.println(e.what());
+  }
+  
 }

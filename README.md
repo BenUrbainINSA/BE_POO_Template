@@ -139,72 +139,95 @@ void Menu::jouerMelodie(int tempo)
 
 ---
 
+Voici l'ajout du nouvel opérateur `operator+=` dans la section de la classe `Instrument` de votre README.
+
+---
+
 ## Instrument Class
 
-La classe `Instrument` est une classe abstraite représentant un instrument musical. Elle définit les propriétés et méthodes communes pour tous les instruments, y compris la note, la durée et le nom. De plus, elle impose une méthode virtuelle pure `emettreSon` pour les classes dérivées, permettant à chaque instrument de jouer son propre son.
+La classe `Instrument` représente un instrument musical. C'est une classe abstraite qui sert de base pour tous les instruments. Elle impose une méthode virtuelle pure `emettreSon`, qui sera implémentée par les classes dérivées, et fournit des attributs et méthodes communs pour tous les instruments.
 
 ### Constructor: `Instrument::Instrument`
 
-Le constructeur de la classe `Instrument` initialise les attributs de la classe : `note`, `duree` et `nom`.
+Le constructeur de la classe `Instrument` initialise les paramètres de la note, de la durée et du nom de l'instrument.
 
 ```cpp
 Instrument::Instrument(const int note, const int duree, const string nom)
 ```
 
-- **note**: La fréquence de la note (en Hz) associée à l'instrument.
+- **note**: La fréquence de la note associée à l'instrument (en Hz).
 - **duree**: La durée pendant laquelle la note doit être jouée (en millisecondes).
 - **nom**: Le nom de l'instrument.
 
+### Operator: `Instrument::operator=`
+
+L'opérateur d'affectation permet de copier les attributs d'un instrument dans un autre.
+
+```cpp
+Instrument & operator =(const Instrument & autre);
+```
+
+- **autre**: L'instrument à copier.
+- **Retour**: La référence à l'instrument actuel (*this).
+
 ### Method: `Instrument::getNote`
 
-Retourne la fréquence de la note associée à l'instrument.
+Retourne la fréquence de la note de l'instrument.
 
 ```cpp
-int Instrument::getNote()
+int getNote();
 ```
 
-- **Retour**: La fréquence de la note (en Hz).
-
-### Method: `Instrument::getDuree`
-
-Retourne la durée pendant laquelle la note est jouée.
-
-```cpp
-int Instrument::getDuree()
-```
-
-- **Retour**: La durée en millisecondes.
+- **Retour**: Fréquence de la note en Hz.
 
 ### Method: `Instrument::getNom`
 
 Retourne le nom de l'instrument.
 
 ```cpp
-string Instrument::getNom()
+string getNom();
 ```
 
-- **Retour**: Le nom de l'instrument sous forme de chaîne de caractères.
+- **Retour**: Nom de l'instrument (en tant que chaîne de caractères).
 
-### Operator: `Instrument::operator=`
+### Method: `Instrument::getDuree`
 
-Surcharge de l'opérateur d'affectation permettant de copier les attributs d'un instrument dans un autre.
+Retourne la durée pendant laquelle la note est jouée.
 
 ```cpp
-Instrument & Instrument::operator =(const Instrument & autre)
+int getDuree();
 ```
 
-- **paramètre**: `autre` — L'instrument dont on veut copier les attributs.
-- **Retour**: L'instrument actuel (*this), après avoir copié les attributs de `autre`.
+- **Retour**: Durée en millisecondes.
 
 ### Destructor: `Instrument::~Instrument`
 
-Destructeur virtuel de la classe `Instrument`. Ce destructeur permet une destruction correcte des objets dérivés via un pointeur de type `Instrument`.
+Destructeur virtuel de la classe `Instrument`. Il permet de garantir une destruction correcte des objets dérivés via un pointeur de type `Instrument`.
 
 ```cpp
-Instrument::~Instrument()
+virtual ~Instrument();
+```
+
+### Operator: `Instrument::operator+=`
+
+L'opérateur `+=` permet d'émettre un son avec l'instrument pour une durée donnée. L'instrument utilise la fréquence de la note de l'objet courant et émet un son pendant la durée spécifiée en argument.
+
+```cpp
+inline void operator += (int duree);
+```
+
+- **duree**: Durée en millisecondes pendant laquelle l'instrument émet un son.
+- **Retour**: Rien, l'opération fait émettre un son via la fonction `tone` sur la broche 14.
+
+**Exemple d'utilisation**:
+```cpp
+Instrument piano(440, 1000, "Piano");
+piano += 500;  // Émet un son de 500ms avec la note 440Hz (A4)
 ```
 
 ---
+
+Cela permet aux utilisateurs d'émettre facilement un son en utilisant l'opérateur `+=`, rendant le code plus lisible et concis.
 
 ## Application Class
 

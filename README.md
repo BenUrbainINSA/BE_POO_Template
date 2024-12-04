@@ -157,7 +157,7 @@ jouerMelodie(500); // tempo de 500 ms entre chaque instrument
 ## Remarques
 
 - Ce code utilise un potentiomètre pour naviguer dans les menus et un bouton pour sélectionner des options.
-- Il est conçu pour fonctionner avec un écran LCD et un contrôleur ESP32 ou Arduino.
+- Il est conçu pour fonctionner avec un écran LCD et un contrôleur ESP32.
 - La gestion des instruments se fait dynamiquement à travers des objets de la classe `Instrument`.
 
 ---

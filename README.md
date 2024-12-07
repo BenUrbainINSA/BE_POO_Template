@@ -210,9 +210,6 @@ Le destructeur par défaut, garanti comme `noexcept`, s'assure que la destructio
 
 ---
 
-Avec cette classe, vous pouvez capturer et identifier précisément les erreurs liées au menu, facilitant ainsi le débogage et la gestion des exceptions dans l'application.
----
-
 ## Instrument Class
 
 La classe `Instrument` représente un instrument musical. C'est une classe abstraite qui sert de base pour tous les instruments. Elle impose une méthode virtuelle pure `emettreSon`, qui sera implémentée par les classes dérivées, et fournit des attributs et méthodes communs pour tous les instruments.

@@ -22,8 +22,6 @@ Menu::Menu(int potPin, int button, rgb_lcd lcd)
 Menu::~Menu() {}
 
 void Menu::init() {
-    Serial.println("buttonPin");
-    Serial.println(buttonPin);
 
     pinMode(buttonPin, INPUT);
     pinMode(potentiometerPin, INPUT);
@@ -39,6 +37,7 @@ void Menu::update() {
     delay(50); // update avant d'actualiser le bouton pour eviter l'aléa de selction multiple  
     int buttonValue = digitalRead(buttonPin);
 
+    // Un double switch case à été ajouté pour eviter que les menu change de façon sporadique lorsque cela n'était pas désiré.
     if (stateChanged) {
         switch (this->state) {
             case -1: // Main Menu

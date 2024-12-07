@@ -3,38 +3,42 @@
 
 ## Table des matières
 
-1. [Introduction](#introduction)
-2. [Menu Class](#menu-class)
-   - [Constructor: `Menu::Menu`](#menu-constructor)
-   - [Destructor: `Menu::~Menu`](#menu-destructor)
-   - [Method: `Menu::init`](#menu-init)
-   - [Method: `Menu::update`](#menu-update)
-   - [Method: `Menu::displayMainMenu`](#menu-displaymainmenu)
-   - [Method: `Menu::displayMenuInstrument`](#menu-displaymenuinstrument)
-   - [Method: `Menu::handleSelection`](#menu-handleselection)
-   - [Method: `Menu::handlePlacement`](#menu-handleplacement)
-   - [Method: `Menu::displayPlacementMenu`](#menu-displayplacementmenu)
-   - [Method: `Menu::placeInstrument`](#menu-placeinstrument)
-   - [Method: `Menu::jouerMelodie`](#menu-jouermelodie)
-3. [Instrument Class](#instrument-class)
-   - [Constructor: `Instrument::Instrument`](#instrument-constructor)
-   - [Method: `Instrument::getNote`](#instrument-getnote)
-   - [Method: `Instrument::getDuree`](#instrument-getduree)
-   - [Method: `Instrument::getNom`](#instrument-getnom)
-   - [Operator: `Instrument::operator=`](#instrument-operator)
-   - [Destructor: `Instrument::~Instrument`](#instrument-destructor)
-4. [Application Class](#application-class)
-   - [Constructor: `Application::Application`](#application-constructor)
-   - [Destructor: `Application::~Application`](#application-destructor)
-   - [Method: `Application::init`](#application-init)
-   - [Method: `Application::run`](#application-run)
+1. [Introduction](#introduction)  
+2. [Menu Class](#menu-class)  
+   - [Constructor: `Menu::Menu`](#menu-constructor)  
+   - [Destructor: `Menu::~Menu`](#menu-destructor)  
+   - [Method: `Menu::init`](#menu-init)  
+   - [Method: `Menu::update`](#menu-update)  
+   - [Method: `Menu::displayMainMenu`](#menu-displaymainmenu)  
+   - [Method: `Menu::displayMenuInstrument`](#menu-displaymenuinstrument)  
+   - [Method: `Menu::handleSelection`](#menu-handleselection)  
+   - [Method: `Menu::handlePlacement`](#menu-handleplacement)  
+   - [Method: `Menu::displayPlacementMenu`](#menu-displayplacementmenu)  
+   - [Method: `Menu::placeInstrument`](#menu-placeinstrument)  
+   - [Method: `Menu::jouerMelodie`](#menu-jouermelodie)  
+3. [Menu Exception Class](#menu-exception-class)  
+   - [Constructor: `MenuException::MenuException`](#menuexception-constructor)  
+   - [Method: `MenuException::what`](#menuexception-what)  
+   - [Destructor: `MenuException::~MenuException`](#menuexception-destructor)  
+4. [Instrument Class](#instrument-class)  
+   - [Constructor: `Instrument::Instrument`](#instrument-constructor)  
+   - [Method: `Instrument::getNote`](#instrument-getnote)  
+   - [Method: `Instrument::getDuree`](#instrument-getduree)  
+   - [Method: `Instrument::getNom`](#instrument-getnom)  
+   - [Operator: `Instrument::operator=`](#instrument-operator)  
+   - [Destructor: `Instrument::~Instrument`](#instrument-destructor)  
+5. [Application Class](#application-class)  
+   - [Constructor: `Application::Application`](#application-constructor)  
+   - [Destructor: `Application::~Application`](#application-destructor)  
+   - [Method: `Application::init`](#application-init)  
+   - [Method: `Application::run`](#application-run)  
 
 
 ---
 
 ## Introduction
 
-Ce projet implémente un menu interactif pour la gestion d'instruments de musique dans un environnement Arduino avec un écran LCD RGB. Les utilisateurs peuvent naviguer à travers les menus, sélectionner des instruments, les placer dans un tableau, puis jouer une mélodie avec les instruments placés.
+Ce projet implémente un menu interactif pour la gestion d'instruments de musique avec un écran LCD RGB. Les utilisateurs peuvent naviguer à travers les menus, sélectionner des instruments, les placer dans un tableau, puis jouer une mélodie avec les instruments placés.
 
 ---
 
@@ -56,7 +60,7 @@ Menu::Menu(int potPin, int button, rgb_lcd lcd)
 
 ### Destructor: `Menu::~Menu`
 
-Le destructeur de la classe `Menu` ne fait qu'une libération de mémoire si nécessaire. Dans ce cas, il est défini mais ne contient pas de code spécifique.
+Le destructeur de la classe `Menu` est défini mais ne contient pas de code spécifique.
 
 ```cpp
 Menu::~Menu()
@@ -136,11 +140,77 @@ Joue une mélodie en utilisant les instruments placés dans le tableau `Lecture`
 ```cpp
 void Menu::jouerMelodie(int tempo)
 ```
+---
+## Menu Exception Class
+
+La classe `MenuException` est une classe d'exception personnalisée dérivée de la classe standard `std::exception`. Elle est conçue pour gérer les erreurs spécifiques liées au fonctionnement du menu de l'application.
+
+### Attributs privés
+
+- **message**: `std::string`  
+  Contient le message décrivant l'erreur qui a causé l'exception.
 
 ---
 
-Voici l'ajout du nouvel opérateur `operator+=` dans la section de la classe `Instrument` de votre README.
+### Constructeur : `MenuException`
 
+Le constructeur permet de créer une exception avec un message d'erreur personnalisé.
+
+```cpp
+explicit MenuException(const std::string& msg);
+```
+
+- **msg** : `const std::string&`  
+  Le message décrivant la nature de l'erreur.
+
+**Exemple d'utilisation :**
+```cpp
+throw MenuException("Erreur: élément du menu invalide.");
+```
+
+---
+
+### Méthode : `what`
+
+La méthode `what()` est redéfinie pour retourner le message d'erreur associé à l'exception. Cette méthode est appelée lorsque l'exception est capturée, permettant d'obtenir une description de l'erreur.
+
+```cpp
+const char* what() const noexcept override;
+```
+
+- **Retour** : `const char*`  
+  Une chaîne de caractères décrivant l'erreur.
+
+**Exemple d'utilisation :**
+```cpp
+try {
+    throw MenuException("Erreur: navigation hors limites.");
+} catch (const MenuException& e) {
+    Serial.println(e.what());
+}
+```
+
+---
+
+### Destructeur : `~MenuException`
+
+Le destructeur par défaut, garanti comme `noexcept`, s'assure que la destruction de l'exception ne génère pas d'exception supplémentaire.
+
+```cpp
+~MenuException() noexcept = default;
+```
+
+---
+
+### Fonctionnalités principales
+
+- Permet de gérer les erreurs spécifiques au menu via des exceptions personnalisées.
+- Compatible avec le système standard d'exceptions C++ (`try-catch`).
+- Fournit des messages d'erreur clairs et détaillés.
+
+---
+
+Avec cette classe, vous pouvez capturer et identifier précisément les erreurs liées au menu, facilitant ainsi le débogage et la gestion des exceptions dans l'application.
 ---
 
 ## Instrument Class
@@ -162,6 +232,7 @@ Instrument::Instrument(const int note, const int duree, const string nom)
 ### Operator: `Instrument::operator=`
 
 L'opérateur d'affectation permet de copier les attributs d'un instrument dans un autre.
+Il était initialement prévu qu'un utilisateur puisse copier un instrument et le modifier, cependant nous n'avons pas eu le temps de l'implémenter.
 
 ```cpp
 Instrument & operator =(const Instrument & autre);
@@ -211,6 +282,7 @@ virtual ~Instrument();
 ### Operator: `Instrument::operator+=`
 
 L'opérateur `+=` permet d'émettre un son avec l'instrument pour une durée donnée. L'instrument utilise la fréquence de la note de l'objet courant et émet un son pendant la durée spécifiée en argument.
+Nous avions également une fonction prévu à cet effet, mais nous avons choisis de modifier cet opérateur afin de rentrer dans le cahier des charges.
 
 ```cpp
 inline void operator += (int duree);
@@ -227,7 +299,6 @@ piano += 500;  // Émet un son de 500ms avec la note 440Hz (A4)
 
 ---
 
-Cela permet aux utilisateurs d'émettre facilement un son en utilisant l'opérateur `+=`, rendant le code plus lisible et concis.
 
 ## Application Class
 
@@ -278,6 +349,7 @@ void Application::init(void)
 ### Method: `Application::run`
 
 Cette méthode est exécutée en boucle pour mettre à jour l'affichage du menu et gérer les interactions.
+Elle possède une exception qui permet de detecter si jamais une durée d'émission de son est negative.
 
 ```cpp
 void Application::run(void)

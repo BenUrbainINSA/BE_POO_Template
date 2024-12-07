@@ -202,14 +202,6 @@ Le destructeur par défaut, garanti comme `noexcept`, s'assure que la destructio
 
 ---
 
-### Fonctionnalités principales
-
-- Permet de gérer les erreurs spécifiques au menu via des exceptions personnalisées.
-- Compatible avec le système standard d'exceptions C++ (`try-catch`).
-- Fournit des messages d'erreur clairs et détaillés.
-
----
-
 ## Instrument Class
 
 La classe `Instrument` représente un instrument musical. C'est une classe abstraite qui sert de base pour tous les instruments. Elle impose une méthode virtuelle pure `emettreSon`, qui sera implémentée par les classes dérivées, et fournit des attributs et méthodes communs pour tous les instruments.

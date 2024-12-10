@@ -4,7 +4,8 @@
 ## Table des matières
 
 1. [Introduction](#introduction)  
-2. [Menu Class](#menu-class)  
+2. [Compilation](#compliation)
+3. [Menu Class](#menu-class)  
    - [Constructor: `Menu::Menu`](#menu-constructor)  
    - [Destructor: `Menu::~Menu`](#menu-destructor)  
    - [Method: `Menu::init`](#menu-init)  
@@ -16,18 +17,18 @@
    - [Method: `Menu::displayPlacementMenu`](#menu-displayplacementmenu)  
    - [Method: `Menu::placeInstrument`](#menu-placeinstrument)  
    - [Method: `Menu::jouerMelodie`](#menu-jouermelodie)  
-3. [Menu Exception Class](#menu-exception-class)  
+4. [Menu Exception Class](#menu-exception-class)  
    - [Constructor: `MenuException::MenuException`](#menuexception-constructor)  
    - [Method: `MenuException::what`](#menuexception-what)  
    - [Destructor: `MenuException::~MenuException`](#menuexception-destructor)  
-4. [Instrument Class](#instrument-class)  
+5. [Instrument Class](#instrument-class)  
    - [Constructor: `Instrument::Instrument`](#instrument-constructor)  
    - [Method: `Instrument::getNote`](#instrument-getnote)  
    - [Method: `Instrument::getDuree`](#instrument-getduree)  
    - [Method: `Instrument::getNom`](#instrument-getnom)  
    - [Operator: `Instrument::operator=`](#instrument-operator)  
    - [Destructor: `Instrument::~Instrument`](#instrument-destructor)  
-5. [Application Class](#application-class)  
+6. [Application Class](#application-class)  
    - [Constructor: `Application::Application`](#application-constructor)  
    - [Destructor: `Application::~Application`](#application-destructor)  
    - [Method: `Application::init`](#application-init)  
@@ -39,6 +40,14 @@
 ## Introduction
 
 Ce projet implémente un menu interactif pour la gestion d'instruments de musique avec un écran LCD RGB. Les utilisateurs peuvent naviguer à travers les menus, sélectionner des instruments, les placer dans un tableau, puis jouer une mélodie avec les instruments placés.
+
+---
+## Compliation 
+
+Afin de compiler le progamme nous utilison l'IDE d'arduino. Il faut cependant activier les exceptions : 
+  Tools
+    \
+     \ C++ Exceptions : "Enable" 
 
 ---
 

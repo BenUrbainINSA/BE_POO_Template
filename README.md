@@ -45,7 +45,8 @@ Ce projet implémente un menu interactif pour la gestion d'instruments de musiqu
 ## Compliation 
 
 Afin de compiler le progamme nous utilison l'IDE d'arduino. Il faut cependant activier les exceptions : 
-Pour cela ouvrir le menu : Tools --> C++ Exceptions : "Enable" 
+Pour cela ouvrir le menu : 
+  Tools --> C++ Exceptions : "Enable" 
 
 ---
 
